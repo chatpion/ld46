@@ -1,0 +1,9 @@
+-lib heaps
+-lib hlsdl
+-lib ogmo-3
+-lib economy
+-hl ld46_debug.hl
+-D resourcesPath=res
+-D ask
+-cp src/
+-main ld46.Main
