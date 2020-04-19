@@ -1,0 +1,3 @@
+# @install: lix --silent download "haxelib:/ogmo-3#1.0.2" into ogmo-3/1.0.2/haxelib
+-cp ${HAXE_LIBCACHE}/ogmo-3/1.0.2/haxelib/ogmo/
+-D ogmo-3=1.0.2

@@ -1,0 +1,5 @@
+# @install: lix --silent download "gh://github.com/ChatPion/economy#d3034e8f60e88449f3641bc89f66736b2add1b4d" into economy/0.1.0/github/d3034e8f60e88449f3641bc89f66736b2add1b4d
+-lib buddy
+-lib mcover
+-cp /home/chatpion/Prog/Heaps/economy/src
+-D economy=0.2.0

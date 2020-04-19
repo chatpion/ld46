@@ -1,0 +1,8 @@
+-lib heaps
+-lib hlsdl
+-lib ogmo-3
+-lib economy
+-hl ld46.hl
+-D resourcesPath=res
+-cp src/
+-main ld46.Main
