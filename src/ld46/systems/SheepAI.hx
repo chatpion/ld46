@@ -38,16 +38,12 @@ class SheepAI extends IteratingSystem {
 
         var dog = space.getEntitiesFor(Family.all([Player]).get()).iterator().next();
         var dogPos = dog.get(Position);
-        
         var pos = entity.get(Position);
-        
         var speed = entity.get(Speed);
-
         var dist = dogPos.v.distanceSq(pos.v);
-
         var total = new Vector();
 
-        if (dist < 7) {
+        if (dist < 4) {
             var factor = 2 * Math.exp(- dist / 4);
 
             // avoid the dog

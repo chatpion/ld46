@@ -31,7 +31,7 @@ class Main extends hxd.App {
         //var level = ogmo.Level.create(hxd.Res.test_level.entry.getText());
 
         var project = ogmo.Project.create(hxd.Res.loader.load("levels.ogmo").toText());
-        var level = ogmo.Level.create(hxd.Res.loader.load("test_level.json").toText());
+        var level = ogmo.Level.create(hxd.Res.loader.load(levelName).toText());
 
 
         var tw = project.tilesets[0].tileWidth;
@@ -152,7 +152,7 @@ class Main extends hxd.App {
         var sheep = new Entity();
         sheep.add(new Position(x, y));
         sheep.add(new Anim(["run" => sheepRunAnim, "idle" => sheepIdleAnim], "idle", 16, 28));
-        sheep.add(new Speed(1));
+        sheep.add(new Speed(1.5));
         sheep.add(new Sheep());
         space.addEntity(sheep);
     }
@@ -162,8 +162,13 @@ class Main extends hxd.App {
         ecoEngine.update(dt);
     }
 
+    private static var levelName = "test_level.json";
+
     static function main() {
         hxd.Res.initEmbed();
+
+        //trace("Input the level file (default: test_level.json) : ");
+        //levelName = Sys.stdin().readLine();
         new Main();
     }
 }
