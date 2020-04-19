@@ -1,0 +1,7 @@
+-lib heaps
+-lib ogmo-3
+-lib economy
+-js ld46.js
+-D resourcesPath=res
+-cp src/
+-main ld46.Main
