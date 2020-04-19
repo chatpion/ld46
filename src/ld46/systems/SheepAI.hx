@@ -14,7 +14,7 @@ class SheepAI extends IteratingSystem {
     private var rand: Rand;
 
     public function new() {
-        super(Family.all([Sheep, Position, Speed]).get());
+        super(Family.all([Sheep, Position, Speed, Alive]).get());
         this.rand = Rand.create();
     }
 

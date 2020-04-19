@@ -5,18 +5,20 @@ import economy.Component;
 
 class Anim implements Component {
     private var anims: Map<String, h2d.Anim>;
-    public var currentAnim(default, set): h2d.Anim; 
-    public var dx: Int;
-    public var dy: Int;
+    public var currentAnim(default, set): h2d.Anim;
 
     private var parent: h2d.Layers;
 
-    public function new(anims: Map<String, h2d.Anim>, defaultAnim: String, dx: Int, dy: Int) {
+    public var lockX: Bool;
+    public var lockY: Bool;
+
+    public function new(anims: Map<String, h2d.Anim>, defaultAnim: String, lockX = false, lockY = false) {
         this.anims = anims;
-        this.dx = dx;
-        this.dy = dy;
 
         this.parent = cast(anims[defaultAnim].parent);
+
+        this.lockX = lockX;
+        this.lockY = lockY;
 
         for (_ => a in anims)
             a.remove();

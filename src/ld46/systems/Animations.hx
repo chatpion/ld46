@@ -22,7 +22,9 @@ class AnimPos extends IteratingSystem {
 
         var speed = entity.get(Speed);
         if (speed != null) {
-            if (speed.v.lengthSq()>  0) {
+            if (!entity.has(Alive)) {
+                anim.setCurrentAnim("dead");
+            } else if (speed.v.lengthSq()>  0) {
                 anim.setCurrentAnim("run");
             } else {
                 anim.setCurrentAnim("idle");
@@ -48,8 +50,13 @@ class AnimDirection extends IteratingSystem {
         var anim = entity.get(Anim);
         var speed = entity.get(Speed);
 
-        var direction = anim.currentAnim.scaleX * (-speed.v.x) > 0 ? -1 : 1;
-
-        anim.currentAnim.scaleX *= direction;
+        if (!anim.lockX) {
+            var directionX = anim.currentAnim.scaleX * (-speed.v.x) > 0 ? -1 : 1;
+            anim.currentAnim.scaleX *= directionX;
+        }
+        if (!anim.lockY) {
+            var directionY = anim.currentAnim.scaleY * (-speed.v.y) > 0 ? -1 : 1;
+            anim.currentAnim.scaleY *= directionY;
+        }
     }
 }

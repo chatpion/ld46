@@ -6,7 +6,7 @@ import ld46.components.*;
 
 class PlayerControls extends IteratingSystem {
     public function new() {
-        super(Family.all([Player, Position, Speed]).get());
+        super(Family.all([Player, Position, Speed, Alive]).get());
     }
 
     public override function processEntity(delta:Float, entity:Entity) {

@@ -28,7 +28,7 @@ class CollisionLayer {
     }
 }
 
-typedef Vec2 = { x: Int, y: Int };
+typedef Coord = { x: Int, y: Int };
 
 class WorldSize {
     public var tw: Int;

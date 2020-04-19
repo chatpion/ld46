@@ -9,7 +9,7 @@ import ld46.Globals;
 
 class MoveEntities extends IteratingSystem {
     public function new() {
-        super(Family.all([Position, Speed]).get());
+        super(Family.all([Position, Speed, Alive]).get());
     }
 
     public override function processEntity(delta:Float, entity:Entity) {
