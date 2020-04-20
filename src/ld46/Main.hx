@@ -72,7 +72,7 @@ class Main extends hxd.App {
         dogSIdleTiles = [tileImage.sub(9 * tw, 0, tw, th)];
         wolfRunTiles = [tileImage.sub(tw, 8 * th, tw, th), tileImage.sub(2 * tw, 8 * th, tw, th)];
         wolfIdleTiles = [tileImage.sub(0, 8 * th, tw, th)];
-        wolfDeadTiles = [tileImage.sub(4 * tw, 8, tw, th)];
+        wolfDeadTiles = [tileImage.sub(3 * tw, 8 * th, tw, th)];
         sheepRunTiles = [tileImage.sub(0, th, tw, th), tileImage.sub(tw, th, tw, th)];
         sheepIdleTiles = [tileImage.sub(3 * tw, th, tw, th)];
         sheepDeadTiles = [tileImage.sub(4 * tw, th, tw, th)];
