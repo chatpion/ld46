@@ -31,7 +31,7 @@ class SheepVerif extends IteratingSystem {
         } else if (cl.isTrap(x, y)) {
             entity.add(new Remove());
             score.dead++;
-            cl.set(x, y, Value.WALL);
+            cl.set(x, y, Value.NONE);
             space.getGlobal(Background).replace(x, y, 38);
         }
     }

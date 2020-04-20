@@ -1,8 +1,7 @@
 package ld46.systems;
 
 import economy.Entity;
-import ld46.components.Anim;
-import ld46.components.Remove;
+import ld46.components.*;
 import economy.Family;
 import economy.IteratingSystem;
 
@@ -16,6 +15,7 @@ class AnimCleanup extends IteratingSystem {
         super.processEntity(delta, entity);
 
         entity.get(Anim).currentAnim.remove();
+
         space.removeEntity(entity);
     }
 

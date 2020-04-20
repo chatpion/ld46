@@ -12,12 +12,14 @@ class TruckSpawner implements Component {
     private var minDelay: Float;
     private var maxDelay: Float;
     private var currentDelay: Float;
+    public var speed: Float;
 
-    public function new(dir: Direction, minDelay: Float, maxDelay: Float) {
+    public function new(dir: Direction, minDelay: Float, maxDelay: Float, speed: Float) {
         this.dir = dir;
         this.minDelay = minDelay;
         this.maxDelay = maxDelay;
         this.currentDelay = minDelay;
+        this.speed = speed;
 
         rand = Rand.create();
     }

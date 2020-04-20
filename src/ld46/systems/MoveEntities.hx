@@ -15,6 +15,8 @@ class MoveEntities extends IteratingSystem {
     public override function processEntity(delta:Float, entity:Entity) {
         super.processEntity(delta, entity);
 
+        this.bg = space.getGlobal(Background);
+
         var speed = entity.get(Speed);
         move(entity, delta, speed.x, 0);
         move(entity, delta, 0, speed.y);
@@ -35,10 +37,12 @@ class MoveEntities extends IteratingSystem {
         pos.y = newY;
     }
 
+    private var bg: Background;
+
     private function isValid(x: Float, y: Float): Bool {
         var tx = Std.int(x);
         var ty = Std.int(y);
-        return !space.getGlobal(CollisionLayer).isWall(tx, ty);
+        return x > 0 && x < bg.ww && y > 0 && y < bg.wh && !space.getGlobal(CollisionLayer).isWall(tx, ty);
     }
 
 }

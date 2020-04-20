@@ -16,10 +16,10 @@ class Camera extends IteratingSystem {
 
     private var camPos: Vector = new Vector();
 
-    private final minX: Float = 3;
-    private final maxX: Float = -3;
-    private final minY: Float = 3;
-    private final maxY: Float = -3;
+    private final minX: Float = 4;
+    private final maxX: Float = -4;
+    private final minY: Float = 4;
+    private final maxY: Float = -4;
 
     public override function processEntity(delta:Float, entity:Entity) {
         super.processEntity(delta, entity);
@@ -29,14 +29,14 @@ class Camera extends IteratingSystem {
 
         var bg = space.getGlobal(Background);
 
-        if (relPos.x < minX && ePos.x > minX)  // player on left edge
+        if (relPos.x < 0 || (relPos.x < minX && ePos.x > minX))  // player on left edge
             camPos.x = ePos.x - minX;
-        else if (relPos.x > bg.sw + maxX && ePos.x < bg.ww + maxX)  // player on right edge
+        else if (relPos.x > bg.sw || (relPos.x > bg.sw + maxX && ePos.x < bg.ww + maxX))  // player on right edge
             camPos.x = ePos.x - bg.sw - maxX;
 
-        if (relPos.y < minY && ePos.y > minY)  // player on top edge
+        if (relPos.y < 0 || (relPos.y < minY && ePos.y > minY))  // player on top edge
             camPos.y = ePos.y - minY;
-        else if (relPos.y > bg.sh + maxY && ePos.y < bg.wh + maxY)  // palyer on bottom edge
+        else if (relPos.y > bg.sh || (relPos.y > bg.sh + maxY && (ePos.y < bg.wh + maxY)))  // palyer on bottom edge
             camPos.y = ePos.y - bg.sh - maxY;
 
         space.getGlobal(h2d.Layers).setPosition(-camPos.x * bg.tw, -camPos.y * bg.th);

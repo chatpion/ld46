@@ -91,7 +91,7 @@ class Main extends hxd.App {
         space.addGlobal(project);
         space.addGlobal(level);
         space.addGlobal(new WorldSize(tw, th));
-        space.addGlobal(new Background(tileSet, background, tw, th, Std.int(level.width), Std.int(level.height)));
+        space.addGlobal(new Background(tileSet, background, tw, th, Std.int(level.width / tw), Std.int(level.height / th)));
 
         ecoEngine.add(space, 0);
 
@@ -131,9 +131,10 @@ class Main extends hxd.App {
                     };
                     var minDelay: Float = entity.values["MinDelay"];
                     var maxDelay: Float = entity.values["MaxDelay"];
+                    var speed: Float = entity.values["Speed"];
                     var e = new Entity();
                     e.add(new Position(x, y));
-                    e.add(new TruckSpawner(dir, minDelay, maxDelay));
+                    e.add(new TruckSpawner(dir, minDelay, maxDelay, speed));
                     space.addEntity(e);
                 }
             }
@@ -215,6 +216,8 @@ class Main extends hxd.App {
 
         if (!paused)
             ecoEngine.update(dt);
+
+        // layers.ysort(1);
     }
 
     private static var levelName = "test_level";

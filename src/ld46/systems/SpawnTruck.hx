@@ -24,13 +24,16 @@ class SpawnTruck extends IteratingSystem {
         var spawner = entity.get(TruckSpawner);
         if (spawner.shouldSpawnTruck(delta)) {
             var pos = entity.get(Position);
-            spawnTruck(pos.x + 0.5, pos.y + 0.5, spawner.dir);
+            spawnTruck(pos.x + 0.5, pos.y + 0.5, spawner);
         }
+        trace("spawm");
     }
 
-    private function spawnTruck(x: Float, y: Float, dir: hxd.Direction) {
+    private function spawnTruck(x: Float, y: Float, spawner: TruckSpawner) {
         var entity = new Entity();
-        entity.add(new Truck(dir));
+        var dir = spawner.dir;
+        var speed = spawner.speed;
+        entity.add(new Truck(dir, speed));
         entity.add(new Position(x - 2 * dir.x, y - 2 * dir.y));
 
         var anim = if (dir.x == 0) {  // vertical
