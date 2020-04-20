@@ -129,6 +129,13 @@ class Main extends hxd.App {
                 }
 
                 space.addGlobal(new Score(entities.length));
+            } else if (layer.name == "wolves") {
+                for (entity in entities) {
+                    if (entity.name != "wolf") continue;
+                    var x: Float = entity.x / tw;
+                    var y: Float = entity.y / th;
+                    makeWolf(x, y);
+                }
             } else if (layer.name == "trucks") {
                 for (entity in entities) {
                     if (entity.name != "truck_spawner") continue;
@@ -216,6 +223,20 @@ class Main extends hxd.App {
         sheep.add(new Alive());
         sheep.add(new Sheep());
         space.addEntity(sheep);
+    }
+
+    private function makeWolf(x: Float, y: Float) {
+        var wolfRunAnim = new h2d.Anim(wolfRunTiles, 8, layers);
+        var wolfIdleAnim = new h2d.Anim(wolfIdleTiles, 8, layers);
+        var wolfDeadAnim = new h2d.Anim(wolfDeadTiles, 8, layers);
+
+        var wolf = new Entity();
+        wolf.add(new Position(x, y));
+        wolf.add(new Anim(["run" => wolfRunAnim, "idle" => wolfIdleAnim, "dead" => wolfDeadAnim], "idle", false, true));
+        wolf.add(new Speed(2));
+        wolf.add(new Alive());
+        wolf.add(new Wolf());
+        space.addEntity(wolf);
     }
 
     var paused = false;
