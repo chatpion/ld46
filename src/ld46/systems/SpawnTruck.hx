@@ -26,7 +26,6 @@ class SpawnTruck extends IteratingSystem {
             var pos = entity.get(Position);
             spawnTruck(pos.x + 0.5, pos.y + 0.5, spawner);
         }
-        trace("spawm");
     }
 
     private function spawnTruck(x: Float, y: Float, spawner: TruckSpawner) {
