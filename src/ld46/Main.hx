@@ -22,6 +22,8 @@ class Main extends hxd.App {
     var dogRunTiles: Array<h2d.Tile>;
     var dogIdleTiles: Array<h2d.Tile>;
     var dogDeadTiles: Array<h2d.Tile>;
+    var dogSRunTiles: Array<h2d.Tile>;
+    var dogSIdleTiles: Array<h2d.Tile>;
     var wolfRunTiles: Array<h2d.Tile>;
     var wolfIdleTiles: Array<h2d.Tile>;
     var wolfDeadTiles: Array<h2d.Tile>;
@@ -66,6 +68,8 @@ class Main extends hxd.App {
         dogRunTiles = [tileImage.sub(0, 0, tw, th), tileImage.sub(tw, 0, tw, th)];
         dogIdleTiles = [tileImage.sub(3 * tw, 0, tw, th)];
         dogDeadTiles = [tileImage.sub(4 * tw, 0, tw, th)];
+        dogSRunTiles = [tileImage.sub(6 * tw, 0, tw, th), tileImage.sub(7 * tw, 0, tw, th)];
+        dogSIdleTiles = [tileImage.sub(9 * tw, 0, tw, th)];
         wolfRunTiles = [tileImage.sub(tw, 8 * th, tw, th), tileImage.sub(2 * tw, 8 * th, tw, th)];
         wolfIdleTiles = [tileImage.sub(0, 8 * th, tw, th)];
         wolfDeadTiles = [tileImage.sub(4 * tw, 0, tw, th)];
@@ -73,7 +77,7 @@ class Main extends hxd.App {
         sheepIdleTiles = [tileImage.sub(3 * tw, th, tw, th)];
         sheepDeadTiles = [tileImage.sub(4 * tw, th, tw, th)];
 
-        for (t in [dogRunTiles, dogIdleTiles, dogDeadTiles].flatten()) {
+        for (t in [dogRunTiles, dogIdleTiles, dogDeadTiles, dogSRunTiles, dogSIdleTiles].flatten()) {
             t.dx = -16;
             t.dy = -28;
         }
@@ -203,9 +207,12 @@ class Main extends hxd.App {
         var run = new h2d.Anim(dogRunTiles, 8, layers);
         var idle = new h2d.Anim(dogIdleTiles, 8, layers);
         var dead = new h2d.Anim(dogDeadTiles, 8, layers);
+        var runS = new h2d.Anim(dogSRunTiles, 8, layers);
+        var idleS = new h2d.Anim(dogSIdleTiles, 8, layers);
+
         var dog = new Entity();
         dog.add(new Position(x, y));
-        dog.add(new Anim(["run" => run, "idle" => idle, "dead" => dead], "idle", false, true));
+        dog.add(new Anim(["run" => run, "idle" => idle, "dead" => dead, "runS" => runS, "idleS" => idleS], "idle", false, true));
         dog.add(new Speed(3));
         dog.add(new Alive());
         dog.add(new Player());
@@ -234,9 +241,9 @@ class Main extends hxd.App {
         var wolf = new Entity();
         wolf.add(new Position(x, y));
         wolf.add(new Anim(["run" => wolfRunAnim, "idle" => wolfIdleAnim, "dead" => wolfDeadAnim], "idle", false, true));
-        wolf.add(new Speed(2));
+        wolf.add(new Speed(2.5));
         wolf.add(new Alive());
-        wolf.add(new Wolf());
+        wolf.add(new Wolf(x, y));
         space.addEntity(wolf);
     }
 

@@ -28,13 +28,15 @@ class PlayerControls extends IteratingSystem {
         } else if (Key.isDown(Key.RIGHT)) {
             dx = 1;
         }
+        
+        if (entity.has(SheepLike)) {
+            entity.get(SheepLike).update(delta);
+        }
 
         if (Key.isPressed(Key.Q)) {
             if (!entity.has(SheepLike)) {
-                trace("sheep on");
                 entity.add(new SheepLike());
-            } else {
-                trace("sheep off");
+            } else if (entity.get(SheepLike).isAvailable()) {
                 entity.remove(SheepLike);
             }
         }

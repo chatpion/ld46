@@ -1,8 +1,6 @@
 package ld46.systems;
 
-import haxe.PosInfos;
 import h3d.Vector;
-import h3d.Matrix;
 import hxd.Rand;
 import economy.Entity;
 import economy.Family;
@@ -19,28 +17,37 @@ class WolfAI extends IteratingSystem {
         this.rand = Rand.create();
     }
 
-    private var nearest: Vector;
-
     public override function processEntity(delta:Float, entity:Entity) {
         super.processEntity(delta, entity);
         var speed = entity.get(Speed);
 
         var pos: Vector = entity.get(Position).v;
-        var sheep = space.getEntitiesFor(Family.one([Sheep, SheepLike]).get());
+        var sheep = space.getEntitiesFor(Family.one([Sheep]).get());
 
         if (sheep.length == 0) return;
 
         // compute nearest
-        nearest = sheep.iterator().next().get(Position).v.sub(pos);
+        var nearest = sheep.iterator().next().get(Position).v.sub(pos);
         for (e in sheep) {
             if (e.get(Position).v.sub(pos).lengthSq() < nearest.lengthSq()) {
                 nearest = e.get(Position).v.sub(pos);
             }
         }
 
+        var sheeplike = space.getEntitiesFor(Family.all([SheepLike]).get());
+        for (dog in sheeplike) {
+            if (!dog.get(SheepLike).isAvailable()) continue;
+            
+            if (dog.get(Position).v.sub(pos).lengthSq() < nearest.lengthSq()) {
+                nearest = dog.get(Position).v.sub(pos);
+            }
+        }
+
         if (nearest.lengthSq() > 40) {
             nearest.scale3(0);
-        }
+            var w = entity.get(Wolf);
+            nearest = w.spawn.sub(pos);
+        } 
 
         speed.v = nearest.getNormalized();
     }

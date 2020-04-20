@@ -25,9 +25,15 @@ class AnimPos extends IteratingSystem {
             if (!entity.has(Alive)) {
                 anim.setCurrentAnim("dead");
             } else if (speed.v.lengthSq()>  0) {
-                anim.setCurrentAnim("run");
+                if (entity.has(SheepLike))
+                    anim.setCurrentAnim("runS");
+                else 
+                    anim.setCurrentAnim("run");
             } else {
-                anim.setCurrentAnim("idle");
+                if (entity.has(SheepLike))
+                    anim.setCurrentAnim("idleS");
+                else
+                    anim.setCurrentAnim("idle");
             }
         }
 

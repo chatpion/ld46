@@ -40,7 +40,9 @@ class SheepAI extends IteratingSystem {
         var pos = entity.get(Position);
         var speed = entity.get(Speed);
 
-        for (dog in space.getEntitiesFor(Family.all([Player]).none([SheepLike]).get())) {
+        for (dog in space.getEntitiesFor(Family.all([Player]).get())) {
+            if (dog.has(SheepLike) && dog.get(SheepLike).isAvailable()) continue;
+
             var dogPos = dog.get(Position);
             var dist = dogPos.v.distanceSq(pos.v);
 
@@ -58,14 +60,14 @@ class SheepAI extends IteratingSystem {
         total = total.add(toMean.getNormalized());
 
         // repulse
-        for (sheep in entities) {
+        /*for (sheep in entities) {
             if (sheep == entity) continue;
             
             var diff = sheep.get(Position).v.sub(pos.v);
             if (diff.lengthSq() > 0.1) {
                 total = total.add(diff);
             }
-        }
+        }*/
 
         total.normalize();
 
