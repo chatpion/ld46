@@ -181,6 +181,7 @@ class Main extends hxd.App {
 
         space.addSystem(new PlayerControls());
         space.addSystem(new SheepAI());
+        space.addSystem(new WolfAI());
         space.addSystem(new MoveEntities());
 
         space.addSystem(new SpawnTruck(tileImage.sub(11 * tw, 5 * th, 2 * tw, 2 * th, -32, -32), tileImage.sub(8 * tw, 5 * th, 3 * tw, 2 * th, -48, -44)));
