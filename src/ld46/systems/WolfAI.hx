@@ -21,29 +21,28 @@ class WolfAI extends IteratingSystem {
 
     private var nearest: Vector;
 
-    public override function beforeAll(delta:Float) {
-        super.beforeAll(delta);
+    public override function processEntity(delta:Float, entity:Entity) {
+        super.processEntity(delta, entity);
+        var speed = entity.get(Speed);
 
-        var pos: Vector = entities.iterator().next().get(Position).v;
+        var pos: Vector = entity.get(Position).v;
         var sheep = space.getEntitiesFor(Family.one([Sheep, SheepLike]).get());
 
+        if (sheep.length == 0) return;
+
+        // compute nearest
         nearest = sheep.iterator().next().get(Position).v.sub(pos);
-        
         for (e in sheep) {
             if (e.get(Position).v.sub(pos).lengthSq() < nearest.lengthSq()) {
                 nearest = e.get(Position).v.sub(pos);
             }
         }
 
-        if (nearest.lengthSq() > 100) {
+        if (nearest.lengthSq() > 40) {
             nearest.scale3(0);
         }
-    }
 
-    public override function processEntity(delta:Float, entity:Entity) {
-        super.processEntity(delta, entity);
-        var speed = entity.get(Speed);
-        speed.v = nearest.getNormalized().getNormalized();
+        speed.v = nearest.getNormalized();
     }
 
     

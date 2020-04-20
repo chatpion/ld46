@@ -36,18 +36,20 @@ class SheepAI extends IteratingSystem {
     public override function processEntity(delta:Float, entity:Entity) {
         super.processEntity(delta, entity);
 
-        var dog = space.getEntitiesFor(Family.all([Player]).get()).iterator().next();
-        var dogPos = dog.get(Position);
+        var total = new Vector();
         var pos = entity.get(Position);
         var speed = entity.get(Speed);
-        var dist = dogPos.v.distanceSq(pos.v);
-        var total = new Vector();
 
-        if (dist < 4) {
-            var factor = 2 * Math.exp(- dist / 4);
-            var avoidDog = pos.v.sub(dogPos.v).getNormalized();
-            avoidDog.scale3(factor);
-            total = total.add(avoidDog);
+        for (dog in space.getEntitiesFor(Family.all([Player]).none([SheepLike]).get())) {
+            var dogPos = dog.get(Position);
+            var dist = dogPos.v.distanceSq(pos.v);
+
+            if (dist < 4) {
+                var factor = 2 * Math.exp(- dist / 4);
+                var avoidDog = pos.v.sub(dogPos.v).getNormalized();
+                avoidDog.scale3(factor);
+                total = total.add(avoidDog);
+            }
         }
 
         var toMean = mean.sub(pos.v);
