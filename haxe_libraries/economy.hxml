@@ -1,3 +1,3 @@
-# @install: lix --silent download "gh://github.com/ChatPion/economy#914ca9da9a464389b002c55b243877af0261a969" into economy/0.2.1/github/914ca9da9a464389b002c55b243877af0261a969
--cp ${HAXE_LIBCACHE}/economy/0.2.1/github/914ca9da9a464389b002c55b243877af0261a969/src/
--D economy=0.2.1
+# @install: lix --silent download "gh://github.com/ChatPion/economy#ae245c9c6585cad2bbe5e94214aef7740b0cfd79" into economy/0.2.2/github/ae245c9c6585cad2bbe5e94214aef7740b0cfd79
+-cp ${HAXE_LIBCACHE}/economy/0.2.2/github/ae245c9c6585cad2bbe5e94214aef7740b0cfd79/src/
+-D economy=0.2.2
