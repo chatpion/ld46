@@ -132,6 +132,19 @@
           "values": {"Direction": "EAST", "MinDelay": 6, "MaxDelay": 6, "Speed": 1}
         }
       ]
+    },
+    {
+      "name": "wolves",
+      "_eid": "41164269",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 1,
+      "gridCellHeight": 1,
+      "gridCellsX": 768,
+      "gridCellsY": 768,
+      "entities": [
+        {"name": "wolf", "id": 0, "_eid": "41166968", "x": 490, "y": 356, "originX": 16, "originY": 28}
+      ]
     }
   ]
 }
