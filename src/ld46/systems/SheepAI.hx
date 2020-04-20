@@ -45,15 +45,8 @@ class SheepAI extends IteratingSystem {
 
         if (dist < 4) {
             var factor = 2 * Math.exp(- dist / 4);
-
-            // avoid the dog
-            var angle = rand.rand() * 0.3;
-            var rotation = new Matrix();
-            rotation.initRotationZ(angle);
             var avoidDog = pos.v.sub(dogPos.v).getNormalized();
-            avoidDog.transform(rotation);  // makes movement a bit random
             avoidDog.scale3(factor);
-
             total = total.add(avoidDog);
         }
 
@@ -73,6 +66,11 @@ class SheepAI extends IteratingSystem {
         }
 
         total.normalize();
+
+        var angle = rand.rand() * 0.3;
+        var rotation = new Matrix();
+        rotation.initRotationZ(angle);
+        total.transform(rotation);  // makes movement a bit random
 
         speed.v = total;
     }
