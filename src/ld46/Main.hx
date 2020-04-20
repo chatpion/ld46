@@ -21,7 +21,7 @@ class Main extends hxd.App {
     
     var dogRunTiles: Array<h2d.Tile>;
     var dogIdleTiles: Array<h2d.Tile>;
-    var dogDeadtiles: Array<h2d.Tile>;
+    var dogDeadTiles: Array<h2d.Tile>;
     var sheepRunTiles: Array<h2d.Tile>;
     var sheepIdleTiles: Array<h2d.Tile>;
     var sheepDeadTiles: Array<h2d.Tile>;
@@ -34,6 +34,8 @@ class Main extends hxd.App {
         //var project = ogmo.Project.create(hxd.Res.levels.entry.getText());
         //var level = ogmo.Level.create(hxd.Res.test_level.entry.getText());
 
+        hxd.Window.getInstance().resize(640, 640);
+
         #if ask
         var loader = new hxd.res.Loader(new hxd.fs.LocalFileSystem("res/", ""));
         #end
@@ -41,9 +43,9 @@ class Main extends hxd.App {
         var project = ogmo.Project.create(hxd.Res.loader.load("levels.ogmo").toText());
         
         #if ask
-        var level = ogmo.Level.create(loader.load(levelName).toText());
+        var level = ogmo.Level.create(loader.load(levelName + ".json").toText());
         #else
-        var level = ogmo.Level.create(hxd.Res.loader.load(levelName).toText());
+        var level = ogmo.Level.create(hxd.Res.loader.load(levelName + ".json").toText());
         #end
 
 
@@ -60,12 +62,12 @@ class Main extends hxd.App {
 
         dogRunTiles = [tileImage.sub(0, 0, tw, th), tileImage.sub(tw, 0, tw, th)];
         dogIdleTiles = [tileImage.sub(3 * tw, 0, tw, th)];
-        dogDeadtiles = [tileImage.sub(4 * tw, 0, tw, th)];
+        dogDeadTiles = [tileImage.sub(4 * tw, 0, tw, th)];
         sheepRunTiles = [tileImage.sub(0, th, tw, th), tileImage.sub(tw, th, tw, th)];
         sheepIdleTiles = [tileImage.sub(3 * tw, th, tw, th)];
         sheepDeadTiles = [tileImage.sub(4 * tw, th, tw, th)];
 
-        for (t in [dogRunTiles, dogIdleTiles].flatten()) {
+        for (t in [dogRunTiles, dogIdleTiles, dogDeadTiles].flatten()) {
             t.dx = -16;
             t.dy = -28;
         }
@@ -89,7 +91,7 @@ class Main extends hxd.App {
         space.addGlobal(project);
         space.addGlobal(level);
         space.addGlobal(new WorldSize(tw, th));
-        space.addGlobal(new Background(tileSet, background, tw, th));
+        space.addGlobal(new Background(tileSet, background, tw, th, Std.int(level.width), Std.int(level.height)));
 
         ecoEngine.add(space, 0);
 
@@ -158,15 +160,17 @@ class Main extends hxd.App {
 
 
         space.addSystem(new PlayerControls());
-        space.addSystem(new MoveEntities());
         space.addSystem(new SheepAI());
+        space.addSystem(new MoveEntities());
 
-        space.addSystem(new SpawnTruck(tileImage.sub(11 * tw, 3 * th, 2 * tw, 4 * th, -32, -64), tileImage.sub(7 * tw, 5 * th, 4 * tw, 2 * th, -64, -32)));
+        space.addSystem(new SpawnTruck(tileImage.sub(11 * tw, 5 * th, 2 * tw, 2 * th, -32, -32), tileImage.sub(8 * tw, 5 * th, 3 * tw, 2 * th, -48, -44)));
         space.addSystem(new TruckManager());
 
         space.addSystem(new SheepVerif());
 
         space.addSystem(new AnimCleanup());
+
+        space.addSystem(new Camera());
 
         space.addSystem(new AnimPos());
         space.addSystem(new AnimDirection());
@@ -177,7 +181,7 @@ class Main extends hxd.App {
     private function makeDog(x: Float, y: Float) {
         var run = new h2d.Anim(dogRunTiles, 8, layers);
         var idle = new h2d.Anim(dogIdleTiles, 8, layers);
-        var dead = new h2d.Anim(dogDeadtiles, 8, layers);
+        var dead = new h2d.Anim(dogDeadTiles, 8, layers);
         var dog = new Entity();
         dog.add(new Position(x, y));
         dog.add(new Anim(["run" => run, "idle" => idle, "dead" => dead], "idle", false, true));
@@ -213,13 +217,13 @@ class Main extends hxd.App {
             ecoEngine.update(dt);
     }
 
-    private static var levelName = "test_level.json";
+    private static var levelName = "test_level";
 
     static function main() {
         hxd.Res.initEmbed();
 
         #if ask
-        trace("Input the level file (default: test_level.json) : ");
+        trace("Input the level file (default: test_level) : ");
         levelName = Sys.stdin().readLine();
         #end
         new Main();

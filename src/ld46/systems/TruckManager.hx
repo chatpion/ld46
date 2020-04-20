@@ -18,7 +18,7 @@ class TruckManager extends IteratingSystem {
         pos.x += dir.x * delta * 20;
         pos.y += dir.y * delta * 20;
 
-        var aabb = dir.x == 0 ? {x: pos.x - 0.5, y: pos.y - 1.5, w: 1, h: 3} : {x: pos.x - 1.5, y: pos.y - 0.5, w: 3, h: 1};
+        var aabb = dir.x == 0 ? {x: pos.x - 0.8, y: pos.y - 0.5, w: 1, h: 1.8} : {x: pos.x - 1.90, y: pos.y - 0.5, w: 3.8, h: 0.5};
 
         var sheeps = space.getEntitiesFor(Family.all([Position, Alive]).get());
 

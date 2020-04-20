@@ -56,12 +56,25 @@ class Background {
     public var group: h2d.TileGroup;
     public var tw: Int;
     public var th: Int;
+    public var ww: Int;
+    public var wh: Int;
 
-    public function new(tileSet: Array<h2d.Tile>, group: h2d.TileGroup, tw: Int, th: Int) {
+    /**
+     * Screen width
+     */
+    public final sw: Int = 10;
+    /**
+     * Screen height
+     */
+    public final sh: Int = 10;
+
+    public function new(tileSet: Array<h2d.Tile>, group: h2d.TileGroup, tw: Int, th: Int, ww: Int, wh: Int) {
         this.tileSet = tileSet;
         this.group = group;
         this.tw = tw;
         this.th = th;
+        this.ww = ww;
+        this.wh = wh;
     }
 
     public function replace(x: Int, y: Int, i: Int) {
