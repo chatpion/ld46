@@ -60,7 +60,19 @@ class SheepAI extends IteratingSystem {
         var toMean = mean.sub(pos.v);
         var closeEnough = toMean.lengthSq() < 1 ? 0 : 1;
         toMean.scale3(closeEnough);
-        total = total.add(toMean.getNormalized()).getNormalized();
+        total = total.add(toMean.getNormalized());
+
+        // repulse
+        for (sheep in entities) {
+            if (sheep == entity) continue;
+            
+            var diff = sheep.get(Position).v.sub(pos.v);
+            if (diff.lengthSq() > 0.1) {
+                total = total.add(diff);
+            }
+        }
+
+        total.normalize();
 
         speed.v = total;
     }
