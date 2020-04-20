@@ -22,6 +22,9 @@ class Main extends hxd.App {
     var dogRunTiles: Array<h2d.Tile>;
     var dogIdleTiles: Array<h2d.Tile>;
     var dogDeadTiles: Array<h2d.Tile>;
+    var wolfRunTiles: Array<h2d.Tile>;
+    var wolfIdleTiles: Array<h2d.Tile>;
+    var wolfDeadTiles: Array<h2d.Tile>;
     var sheepRunTiles: Array<h2d.Tile>;
     var sheepIdleTiles: Array<h2d.Tile>;
     var sheepDeadTiles: Array<h2d.Tile>;
@@ -63,6 +66,9 @@ class Main extends hxd.App {
         dogRunTiles = [tileImage.sub(0, 0, tw, th), tileImage.sub(tw, 0, tw, th)];
         dogIdleTiles = [tileImage.sub(3 * tw, 0, tw, th)];
         dogDeadTiles = [tileImage.sub(4 * tw, 0, tw, th)];
+        wolfRunTiles = [tileImage.sub(tw, 8 * th, tw, th), tileImage.sub(2 * tw, 8 * th, tw, th)];
+        wolfIdleTiles = [tileImage.sub(0, 8 * th, tw, th)];
+        wolfDeadTiles = [tileImage.sub(4 * tw, 0, tw, th)];
         sheepRunTiles = [tileImage.sub(0, th, tw, th), tileImage.sub(tw, th, tw, th)];
         sheepIdleTiles = [tileImage.sub(3 * tw, th, tw, th)];
         sheepDeadTiles = [tileImage.sub(4 * tw, th, tw, th)];
@@ -72,7 +78,13 @@ class Main extends hxd.App {
             t.dy = -28;
         }
 
+
         for (t in [sheepRunTiles, sheepIdleTiles, sheepDeadTiles].flatten()) {
+            t.dx = -16;
+            t.dy = -28;
+        }
+
+        for (t in [wolfRunTiles, wolfIdleTiles, wolfDeadTiles].flatten()) {
             t.dx = -16;
             t.dy = -28;
         }
