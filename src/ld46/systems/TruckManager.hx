@@ -19,7 +19,7 @@ class TruckManager extends IteratingSystem {
         super(Family.all([Truck, Position]).get());
         protchSound = null;
         if (Sound.supportedFormat(Wav)) {
-            protchSound = Res.protch_wav;
+            protchSound = Res.protch;
         }
     }
 

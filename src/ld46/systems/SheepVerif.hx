@@ -19,7 +19,7 @@ class SheepVerif extends IteratingSystem {
         super(Family.all([Position, Alive]).one([Sheep, Wolf]).get());
         protchSound = null;
         if (Sound.supportedFormat(Wav)) {
-            protchSound = Res.protch_wav;
+            protchSound = Res.protch;
         }
     }
 
