@@ -277,6 +277,9 @@ class Main extends hxd.App {
 
             if ((space.getEntitiesFor(Family.all([Sheep, Alive]).get()).get_length() == 0 && space.getGlobal(Score).saved == 0) || space.getEntitiesFor(Family.all([Player, Alive]).get()).get_length() == 0) {
                 timeToLive = 2;
+            } else if (space.getGlobal(Score).saved == space.getGlobal(Score).total) {
+                levelName++;
+                reset();
             }
 
             if (!paused)
