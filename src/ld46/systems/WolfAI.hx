@@ -1,5 +1,7 @@
 package ld46.systems;
 
+import hxd.Res;
+import hxd.res.Sound;
 import h3d.Vector;
 import hxd.Rand;
 import economy.Entity;
@@ -11,10 +13,15 @@ import ld46.components.*;
 class WolfAI extends IteratingSystem {
 
     private var rand: Rand;
+    public var crocSound: Sound;
 
     public function new() {
         super(Family.all([Wolf, Position, Speed, Alive]).get());
         this.rand = Rand.create();
+        crocSound = null;
+        if (Sound.supportedFormat(Wav)) {
+            crocSound = Res.croc;
+        }
     }
 
     public override function processEntity(delta:Float, entity:Entity) {
@@ -86,6 +93,9 @@ class WolfAI extends IteratingSystem {
                 nearestEntity.remove(SheepLike);
             } else {
                 nearestEntity.remove(Alive);
+                if (crocSound != null) {
+                    crocSound.play(false);
+                }
             }
             nearestEntity.remove(Eaten);
             w.isEating = false;
