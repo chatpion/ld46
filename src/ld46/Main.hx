@@ -269,8 +269,11 @@ class Main extends hxd.App {
                     init();
                 }
             }
+            if (Key.isPressed(Key.R)) {
+                init();
+            }
 
-            if (space.getEntitiesFor(Family.all([Sheep, Alive]).get()).get_length() == 0 || space.getEntitiesFor(Family.all([Player, Alive]).get()).get_length() == 0) {
+            if ((space.getEntitiesFor(Family.all([Sheep, Alive]).get()).get_length() == 0 && space.getGlobal(Score).saved == 0) || space.getEntitiesFor(Family.all([Player, Alive]).get()).get_length() == 0) {
                 timeToLive = 2;
             }
 
