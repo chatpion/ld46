@@ -36,6 +36,8 @@ class Main extends hxd.App {
 
     var layers: h2d.Layers;
 
+    var root: h2d.Object;
+
     override private function init() {
         super.init();
 
@@ -98,7 +100,7 @@ class Main extends hxd.App {
             t.dy = -28;
         }
 
-        var root = new h2d.Object(s2d);
+        root = new h2d.Object(s2d);
         root.setScale(2);
 
         layers = new h2d.Layers(root);
@@ -266,11 +268,11 @@ class Main extends hxd.App {
             if (Key.isPressed(Key.ENTER)) {
                 if (space.getGlobal(Score).saved > 0) {
                     levelName++;
-                    init();
+                    reset();
                 }
             }
             if (Key.isPressed(Key.R)) {
-                init();
+                reset();
             }
 
             if ((space.getEntitiesFor(Family.all([Sheep, Alive]).get()).get_length() == 0 && space.getGlobal(Score).saved == 0) || space.getEntitiesFor(Family.all([Player, Alive]).get()).get_length() == 0) {
@@ -284,9 +286,14 @@ class Main extends hxd.App {
         } else {
             timeToLive -= dt;
             if (timeToLive < 0) {
-                init();
+                reset();
             }
         }
+    }
+
+    private function reset() {
+        s2d.removeChild(root);
+        init();
     }
 
 
