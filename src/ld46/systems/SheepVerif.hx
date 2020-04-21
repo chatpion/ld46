@@ -14,12 +14,15 @@ import ld46.Globals;
 class SheepVerif extends IteratingSystem {
 
     public var protchSound: Sound;
+    public var harpSound: Sound;
 
     public function new() {
         super(Family.all([Position, Alive]).one([Sheep, Wolf]).get());
         protchSound = null;
+        harpSound = null;
         if (Sound.supportedFormat(Wav)) {
             protchSound = Res.protch;
+            harpSound = Res.harp;
         }
     }
 
@@ -36,6 +39,9 @@ class SheepVerif extends IteratingSystem {
         if (cl.isGoal(x, y) && entity.has(Sheep)) {
             entity.add(new Remove());
             score.saved++;
+            if (harpSound != null) {
+                harpSound.play(false);
+            }
         } else if (cl.isTrap(x, y)) {
             entity.add(new Remove());
 
