@@ -1,5 +1,6 @@
 package ld46;
 
+import economy.Family;
 import hxd.Key;
 import hxd.Direction;
 import economy.Entity;
@@ -14,6 +15,7 @@ import ld46.Globals;
 using Lambda;
 
 class Main extends hxd.App {
+    var timeToLive: Float;
     var ecoEngine: EEngine;
     var space: Space;
     
@@ -40,6 +42,7 @@ class Main extends hxd.App {
         //var project = ogmo.Project.create(hxd.Res.levels.entry.getText());
         //var level = ogmo.Level.create(hxd.Res.test_level.entry.getText());
 
+        timeToLive = 0;
         hxd.Window.getInstance().resize(640, 640);
 
         #if ask
@@ -254,22 +257,33 @@ class Main extends hxd.App {
     var paused = false;
 
     public override function update(dt:Float) {
-        super.update(dt);
+        if (timeToLive == 0) {
+            super.update(dt);
 
-        if (Key.isPressed(Key.P))
-            paused = !paused;
+            if (Key.isPressed(Key.P))
+                paused = !paused;
 
-        if (Key.isPressed(Key.ENTER)) {
-            if (space.getGlobal(Score).saved > 0) {
-                levelName++;
+            if (Key.isPressed(Key.ENTER)) {
+                if (space.getGlobal(Score).saved > 0) {
+                    levelName++;
+                    init();
+                }
+            }
+
+            if (space.getEntitiesFor(Family.all([Sheep, Alive]).get()).get_length() == 0 || space.getEntitiesFor(Family.all([Player, Alive]).get()).get_length() == 0) {
+                timeToLive = 2;
+            }
+
+            if (!paused)
+                ecoEngine.update(dt);
+
+            // layers.ysort(1);
+        } else {
+            timeToLive -= dt;
+            if (timeToLive < 0) {
                 init();
             }
         }
-
-        if (!paused)
-            ecoEngine.update(dt);
-
-        // layers.ysort(1);
     }
 
 
