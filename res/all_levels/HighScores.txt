@@ -1,0 +1,10 @@
+Maxima:
+1 : 2 moutons
+2 : 3 moutons
+3 : 5 moutons
+4,5,6 : 3 moutons
+7,8 : 5 moutons
+9 : 3 moutons
+10 : 1 mouton
+11,12 : 4 (3) moutons
+13 : 6 (5) moutons
