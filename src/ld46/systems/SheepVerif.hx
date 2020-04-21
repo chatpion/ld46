@@ -1,5 +1,7 @@
 package ld46.systems;
 
+import hxd.Res;
+import hxd.res.Sound;
 import ld46.components.Remove;
 import economy.Entity;
 import ld46.components.Position;
@@ -11,8 +13,14 @@ import ld46.Globals;
 
 class SheepVerif extends IteratingSystem {
 
+    public var protchSound: Sound;
+
     public function new() {
         super(Family.all([Position, Alive]).one([Sheep, Wolf]).get());
+        protchSound = null;
+        if (Sound.supportedFormat(Wav)) {
+            protchSound = Res.protch_wav;
+        }
     }
 
     public override function processEntity(delta:Float, entity:Entity) {
@@ -30,8 +38,13 @@ class SheepVerif extends IteratingSystem {
             score.saved++;
         } else if (cl.isTrap(x, y)) {
             entity.add(new Remove());
-            if (entity.has(Sheep))
+
+            if (entity.has(Sheep)) {
                 score.dead++;
+                if (protchSound != null) {
+                    protchSound.play(false);
+                }
+            }
             cl.set(x, y, Value.NONE);
 
             if (entity.has(Sheep))

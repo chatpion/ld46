@@ -7,15 +7,20 @@ import economy.*;
 import ld46.components.*;
 
 class PlayerControls extends IteratingSystem {
+    private var barkSound: Sound;
+
     public function new() {
         super(Family.all([Player, Position, Speed, Alive]).get());
+        barkSound = null;
+        if (Sound.supportedFormat(Wav)) {
+            barkSound = Res.bark;
+        }
     }
 
     public override function processEntity(delta:Float, entity:Entity) {
         super.processEntity(delta, entity);
 
         var speed = entity.get(Speed);
-        var musicResource: Sound = null;
 
         var dx = 0;
         var dy = 0;
@@ -53,11 +58,8 @@ class PlayerControls extends IteratingSystem {
         }
 
         if (Key.isPressed(Key.B)) {
-            if (Sound.supportedFormat(Mp3)) {
-                musicResource = Res.bark0;
-            }
-            if (musicResource != null) {
-                musicResource.play(false);
+            if (barkSound != null) {
+                barkSound.play(false);
             }
         }
         

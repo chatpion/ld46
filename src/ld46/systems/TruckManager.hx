@@ -1,5 +1,7 @@
 package ld46.systems;
 
+import hxd.Res;
+import hxd.res.Sound;
 import ld46.Globals.Background;
 import economy.Space;
 import economy.Entity;
@@ -11,8 +13,14 @@ import h2d.Camera;
 import ld46.components.*;
 
 class TruckManager extends IteratingSystem {
+    public var protchSound: Sound;
+
     public function new() {
         super(Family.all([Truck, Position]).get());
+        protchSound = null;
+        if (Sound.supportedFormat(Wav)) {
+            protchSound = Res.protch_wav;
+        }
     }
 
     private var g: h2d.Graphics;
@@ -52,6 +60,9 @@ class TruckManager extends IteratingSystem {
             var sy = sheepPos.y;
             if (!(sx < aabb.x || sx > aabb.x + aabb.w || sy < aabb.y || sy > aabb.y + aabb.h)) {
                 // TODO: Ragdoll the sheep
+                if (protchSound != null) {
+                    protchSound.play(false);
+                }
                 sheep.remove(Alive);
             }
         }
