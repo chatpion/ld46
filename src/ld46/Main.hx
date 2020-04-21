@@ -27,6 +27,7 @@ class Main extends hxd.App {
     var wolfRunTiles: Array<h2d.Tile>;
     var wolfIdleTiles: Array<h2d.Tile>;
     var wolfDeadTiles: Array<h2d.Tile>;
+    var wolfEatTiles: Array<h2d.Tile>;
     var sheepRunTiles: Array<h2d.Tile>;
     var sheepIdleTiles: Array<h2d.Tile>;
     var sheepDeadTiles: Array<h2d.Tile>;
@@ -73,6 +74,7 @@ class Main extends hxd.App {
         wolfRunTiles = [tileImage.sub(tw, 8 * th, tw, th), tileImage.sub(2 * tw, 8 * th, tw, th)];
         wolfIdleTiles = [tileImage.sub(0, 8 * th, tw, th)];
         wolfDeadTiles = [tileImage.sub(3 * tw, 8 * th, tw, th)];
+        wolfEatTiles = [tileImage.sub(4 * tw, 8 * th, tw, th)];
         sheepRunTiles = [tileImage.sub(0, th, tw, th), tileImage.sub(tw, th, tw, th)];
         sheepIdleTiles = [tileImage.sub(3 * tw, th, tw, th)];
         sheepDeadTiles = [tileImage.sub(4 * tw, th, tw, th)];
@@ -88,7 +90,7 @@ class Main extends hxd.App {
             t.dy = -28;
         }
 
-        for (t in [wolfRunTiles, wolfIdleTiles, wolfDeadTiles].flatten()) {
+        for (t in [wolfRunTiles, wolfIdleTiles, wolfDeadTiles, wolfEatTiles].flatten()) {
             t.dx = -16;
             t.dy = -28;
         }
@@ -237,10 +239,11 @@ class Main extends hxd.App {
         var wolfRunAnim = new h2d.Anim(wolfRunTiles, 8, layers);
         var wolfIdleAnim = new h2d.Anim(wolfIdleTiles, 8, layers);
         var wolfDeadAnim = new h2d.Anim(wolfDeadTiles, 8, layers);
+        var wolfEatAnim = new h2d.Anim(wolfEatTiles, 8, layers);
 
         var wolf = new Entity();
         wolf.add(new Position(x, y));
-        wolf.add(new Anim(["run" => wolfRunAnim, "idle" => wolfIdleAnim, "dead" => wolfDeadAnim], "idle", false, true));
+        wolf.add(new Anim(["run" => wolfRunAnim, "idle" => wolfIdleAnim, "dead" => wolfDeadAnim, "eat" => wolfEatAnim], "idle", false, true));
         wolf.add(new Speed(2.5));
         wolf.add(new Alive());
         wolf.add(new Wolf(x, y));

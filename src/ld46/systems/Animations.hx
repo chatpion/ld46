@@ -32,7 +32,9 @@ class AnimPos extends IteratingSystem {
             } else {
                 if (entity.has(SheepLike))
                     anim.setCurrentAnim("idleS");
-                else
+                else if (entity.has(Wolf) && entity.get(Wolf).isEating) {
+                    anim.setCurrentAnim("eat");
+                } else
                     anim.setCurrentAnim("idle");
             }
         }

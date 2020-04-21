@@ -21,16 +21,30 @@ class WolfAI extends IteratingSystem {
         super.processEntity(delta, entity);
         var speed = entity.get(Speed);
 
+        var w = entity.get(Wolf);
         var pos: Vector = entity.get(Position).v;
-        var sheep = space.getEntitiesFor(Family.one([Sheep]).get());
+
+        var targets = space.getEntitiesFor(Family.all([Eaten, Alive]).get());
+        for (target in targets) {
+            if (closeEnough(target.get(Position).v, pos)) {
+                eat(target, delta, w);
+                speed.v.scale3(0);
+                return;
+            }
+        }
+
+        var sheep = space.getEntitiesFor(Family.all([Sheep, Alive]).get());
 
         if (sheep.length == 0) return;
 
         // compute nearest
-        var nearest = sheep.iterator().next().get(Position).v.sub(pos);
+
+        var nearestEntity = sheep.iterator().next();
+        var nearest = nearestEntity.get(Position).v.sub(pos);
         for (e in sheep) {
             if (e.get(Position).v.sub(pos).lengthSq() < nearest.lengthSq()) {
                 nearest = e.get(Position).v.sub(pos);
+                nearestEntity = e;
             }
         }
 
@@ -40,17 +54,44 @@ class WolfAI extends IteratingSystem {
             
             if (dog.get(Position).v.sub(pos).lengthSq() < nearest.lengthSq()) {
                 nearest = dog.get(Position).v.sub(pos);
+                nearestEntity = dog;
             }
         }
 
+        w.isEating = false;
+
         if (nearest.lengthSq() > 40) {
             nearest.scale3(0);
-            var w = entity.get(Wolf);
             nearest = w.spawn.sub(pos);
+        } else if (closeEnough(pos, nearestEntity.get(Position).v)) {
+            if (!nearestEntity.has(Eaten)) {
+                nearestEntity.add(new Eaten(nearestEntity.has(SheepLike) ? 2 : 1));
+            } else {
+                eat(nearestEntity, delta, w);
+            }
         } 
-
         speed.v = nearest.getNormalized();
     }
+
+    private function closeEnough(wolf: Vector, target: Vector): Bool {
+        return wolf.distanceSq(target) <= 0.1;
+    }
+
+    private function eat(nearestEntity: Entity, delta: Float, w: Wolf) {
+        var eaten = nearestEntity.get(Eaten);
+        eaten.progression -= delta;
+        w.isEating = true;
+        if (eaten.progression <= 0) {
+            if (nearestEntity.has(SheepLike)) {
+                nearestEntity.remove(SheepLike);
+            } else {
+                nearestEntity.remove(Alive);
+            }
+            nearestEntity.remove(Eaten);
+            w.isEating = false;
+        }
+    }
+
 
     
 }

@@ -23,6 +23,8 @@ class MoveEntities extends IteratingSystem {
     }
 
     private function move(entity: Entity, delta: Float, dx: Float, dy: Float) {
+        if (entity.has(Sheep) && entity.has(Eaten)) return;
+        
         var speed = entity.get(Speed);
         var s = speed.speed;
         var pos = entity.get(Position);
