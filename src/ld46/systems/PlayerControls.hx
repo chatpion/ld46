@@ -36,9 +36,17 @@ class PlayerControls extends IteratingSystem {
             entity.get(SheepLike).update(delta);
         }
 
-        if (Key.isPressed(Key.Q)) {
+        if (Key.isPressed(Key.SPACE)) {
             if (!entity.has(SheepLike)) {
-                entity.add(new SheepLike());
+                for (sheep in space.getEntitiesFor(Family.all([Sheep]).none([Alive]).get())) {
+                    if (sheep.get(Position).v.distanceSq(entity.get(Position).v) < 0.1) {
+                        if (Key.isPressed(Key.SPACE)) {
+                            entity.add(new SheepLike());
+                            sheep.add(new Remove());
+                            break;
+                        }
+                    }
+                }
             } else if (entity.get(SheepLike).isAvailable()) {
                 entity.remove(SheepLike);
             }
@@ -52,6 +60,7 @@ class PlayerControls extends IteratingSystem {
                 musicResource.play(false);
             }
         }
+        
 
         speed.x = dx;
         speed.y = dy;

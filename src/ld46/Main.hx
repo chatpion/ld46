@@ -258,13 +258,21 @@ class Main extends hxd.App {
         if (Key.isPressed(Key.P))
             paused = !paused;
 
+        if (Key.isPressed(Key.ENTER)) {
+            if (space.getGlobal(Score).saved > 0) {
+                levelName++;
+                init();
+            }
+        }
+
         if (!paused)
             ecoEngine.update(dt);
 
         // layers.ysort(1);
     }
 
-    private static var levelName = "test_level";
+
+    private static var levelName = 1;
 
     static function main() {
         hxd.Res.initEmbed();
