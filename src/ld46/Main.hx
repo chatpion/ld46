@@ -184,6 +184,7 @@ class Main extends hxd.App {
 
 
         space.addSystem(new PlayerControls());
+        space.addSystem(new BGSound());
         space.addSystem(new SheepAI());
         space.addSystem(new WolfAI());
         space.addSystem(new MoveEntities());

@@ -50,7 +50,5 @@ class WolfAI extends IteratingSystem {
         } 
 
         speed.v = nearest.getNormalized();
-    }
-
-    
+    }    
 }
