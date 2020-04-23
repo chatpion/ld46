@@ -2,4 +2,3 @@
 -lib format
 -cp ${HAXE_LIBCACHE}/heaps/1.8.0/haxelib/
 -D heaps=1.8.0
--D resourcesPath="../res/"
